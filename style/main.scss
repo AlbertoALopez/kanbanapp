@@ -1,0 +1,40 @@
+/* =================================
+  Imports
+==================================== */
+
+@import "./shadow-mixin.scss";
+@import "./colors.scss";
+
+/* =================================
+  Base Element Styles
+==================================== */
+
+body {
+	background: $background-color;
+	font-family: sans-serif;
+}
+
+.add-note,
+.delete-note {
+	background-color: $button-color;
+	border: 1px solid #ccc;
+	@include shadow(1);
+	margin: 10px 0 0 0;
+}
+
+.note {
+		margin-bottom: 0.5em;
+		padding: 0.5em;
+		background-color: $card-color;
+		@include shadow(2);
+		.task {
+			display: inline-block;
+		}
+}
+
+.notes {
+	margin: 0.5em;
+	padding-left: 0;
+	max-width: 10em;
+	list-style: none;
+}

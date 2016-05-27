@@ -3,11 +3,19 @@ const merge = require('webpack-merge');
 const webpack = require('webpack');
 const NpmInstallPlugin = require('npm-install-webpack-plugin');
 
+require.extensions['.scss'] = () => {
+return;
+};
+require.extensions['.css'] = () => {
+return;
+};
+
 const TARGET = process.env.npm_lifecycle_event;
 process.env.BABEL_ENV = TARGET;
 const PATHS = {
 	app: path.join(__dirname, 'app'),
-	build: path.join(__dirname, 'build')
+	build: path.join(__dirname, 'build'),
+	style: path.join(__dirname, 'style')
 };
 
 const common = {
@@ -15,7 +23,7 @@ const common = {
 		app: PATHS.app
 	},
 	resolve: {
-		extensions: ['', '.js', '.jsx']
+		extensions: ['', '.js', '.jsx', '.scss']
 	},
 	output: {
 		path: PATHS.build,
@@ -24,9 +32,14 @@ const common = {
 	module: {
 		loaders: [
 			{
+				test: /\.scss$/,
+				loaders: ['style', 'css', 'sass'],
+				include: PATHS.style
+			},
+			{
 				test: /\.css$/,
 				loaders: ['style', 'css'],
-				include: PATHS.app
+				include: PATHS.style
 			},
 			{
 				test: /\.jsx?$/,
@@ -34,6 +47,9 @@ const common = {
 				include: PATHS.app
 			}
 		]
+	},
+	sassLoader: {
+		includePaths: [path.resolve(__dirname, 'node_modules')]
 	}
 };
 
@@ -56,7 +72,7 @@ if (TARGET === 'start' || !TARGET) {
 		plugins: [
 			new webpack.HotModuleReplacementPlugin(),
 			new NpmInstallPlugin({
-				save: true // --save
+				save: true
 			})
 		]
 	});
