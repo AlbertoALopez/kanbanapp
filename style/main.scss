@@ -2,8 +2,8 @@
   Imports
 ==================================== */
 
-@import "./shadow-mixin.scss";
-@import "./colors.scss";
+@import "./_shadow-mixin.scss";
+@import "./_colors.scss";
 
 /* =================================
   Base Element Styles
@@ -29,6 +29,18 @@ body {
 		@include shadow(2);
 		.task {
 			display: inline-block;
+		}
+		.card {
+		  width: 95px;
+		  height: 95px;
+			padding: 20px;
+		  margin: 0 auto;
+		  @include transition(all 250ms);
+		  @include shadow(1);
+		  &:hover {
+		    @include shadow(3);
+		    @include transform(translateY(-5px));
+		  }
 		}
 }
 
