@@ -1,6 +1,6 @@
 import uuid from 'node-uuid';
 import alt from '../libs/alt';
-import NoteActions from '../actions/NoteActions';
+import NoteActions from '../actions/NoteActions.js';
 
 class NoteStore {
 	constructor() {
