@@ -14,12 +14,52 @@ body {
 	font-family: sans-serif;
 }
 
-.add-note,
-.delete-note {
-	background-color: $button-color;
+.lane {
+	display: inline-block;
+	margin: 1em;
+	background-color: $lane-color;
 	border: 1px solid #ccc;
+	border-radius: 0.5em;
+	min-width: 10em;
+	vertical-align: top;
+	.lane-header {
+		overflow: auto;
+		padding: 1em;
+		color: #efefef;
+		background-color: $header-color;
+		border-top-left-radius: 0.5em;
+		border-top-right-radius: 0.5em;
+	}
+	.lane-name {
+		float: left;
+	}
+	.lane-add-note {
+		float: left;
+		margin-right: 0.5em;
+	}
+	.lane-delete {
+		float: right;
+		margin-left: 0.5em;
+	}
+	.add-lane,
+	.lane-add-note button {
+		cursor: pointer;
+		background-color: #fdfdfd;
+		border: 1px solid #ccc;
+	}
+	.lane-delete button {
+		// padding: 0;
+		cursor: pointer;
+		background-color: $button-color;
+		border: 0;
+	}
+}
+
+.delete {
+	background-color: $button-color;
 	@include shadow(1);
 	margin: 10px 0 0 0;
+	cursor: pointer;
 }
 
 .note {
@@ -28,10 +68,8 @@ body {
 	padding: 0.5em;
 	background-color: $card-color;
 	@include shadow(2);
-	.task {
+	.value {
 		display: inline-block;
-	}
-	.card {
 		word-wrap: break-word;
 		width: 95px;
 	  height: 95px;
