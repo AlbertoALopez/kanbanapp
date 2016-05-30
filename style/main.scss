@@ -22,6 +22,12 @@ body {
 	border-radius: 0.5em;
 	min-width: 10em;
 	vertical-align: top;
+	@include transition (all 750ms);
+	&:hover {
+		.lane-delete button {
+			visibility: visible;
+		}
+	}
 	.lane-header {
 		overflow: auto;
 		padding: 1em;
@@ -32,6 +38,8 @@ body {
 	}
 	.lane-name {
 		float: left;
+		word-wrap: break-word;
+		max-width: 5em;
 	}
 	.lane-add-note {
 		float: left;
@@ -48,10 +56,10 @@ body {
 		border: 1px solid #ccc;
 	}
 	.lane-delete button {
-		// padding: 0;
 		cursor: pointer;
 		background-color: $button-color;
 		border: 0;
+		visibility: hidden;
 	}
 }
 
@@ -80,6 +88,9 @@ body {
 	  &:hover {
 	    @include shadow(3);
 	    @include transform(translateY(-5px));
+			.lane-delete button {
+				visibility: hidden;
+			}
 	  }
 	}
 }
@@ -89,4 +100,5 @@ body {
 	padding-left: 0;
 	max-width: 10em;
 	list-style: none;
+	overflow: auto;
 }

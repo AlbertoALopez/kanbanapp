@@ -1,68 +1,44 @@
 import React from 'react';
+import {DragSource, DropTarget} from 'react-dnd';
+import ItemTypes from '../constants/itemTypes';
 
-export default class Note extends React.Component {
-	constructor(props) {
-		super(props);
-
-		// Editing state
-		this.state = {
-			editing: false
+const noteSource = {
+	beginDrag(props) {
+		return {
+			id: props.id
 		};
 	}
-	render() {
-		if(this.state.editing) {
-			return this.renderEdit();
-		}
+};
 
-		return this.renderNote();
+const noteTarget = {
+	hover(targetProps, monitor) {
+		const targetId = targetProps.id;
+		const sourceProps = monitor.getItem();
+		const sourceId = sourceProps.id;
+
+		if (sourceId !== targetId) {
+			targetProps.onMove({ sourceId, targetId});
+		}
 	}
-	renderEdit = () => {
-		return <input type="text"
-			ref={
-				element => element ?
-				element.selectionStart = this.props.task.length : null
-			}
-			autofocus={true}
-			defaultValue={this.props.task}
-			onBlur={this.finishEdit}
-			onKeyPress={this.checkEnter} />
-	};
-	renderNote = () => {
-		// trigger editing logic
-		const onDelete = this.props.onDelete;
+};
 
-		return (
-			<div onClick={this.edit}>
-				<span className="task card">{this.props.task}</span>
-				{onDelete ? this.renderDelete() : null }
-			</div>
-		);
-	};
-	edit = () => {
-		// edit mode
-		this.setState({
-			editing: true
-		});
-	};
-	checkEnter = (e) => {
-		// user hits enter
-		if(e.key === 'Enter') {
-			this.finishEdit(e);
-		}
-	};
-	finishEdit = (e) => {
-		const value = e.target.value;
+@DragSource(ItemTypes.NOTE, noteSource, (connect) => ({
+	connectDragSource: connect.dragSource()
+}))
+@DropTarget(ItemTypes.NOTE, noteTarget, (connect)=> ({
+	connectDropTarget: connect.dropTarget()
+}))
+export default class Note extends React.Component {
+	render() {
+		const {
+			connectDragSource,
+			connectDropTarget,
+			id,
+			onMove,
+			...props} = this.props;
 
-		if(this.props.onEdit) {
-			this.props.onEdit(value);
-
-			// exit edit mode
-			this.setState({
-				editing: false
-			});
-		}
-	};
-	renderDelete = () => {
-		return <button className="delete-note" onClick={this.props.onDelete}>x</button>;
-	};
+		return connectDragSource(connectDropTarget(
+			<li {...props}>{props.children}</li>
+		));
+	}
 }
