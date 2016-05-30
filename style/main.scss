@@ -23,26 +23,27 @@ body {
 }
 
 .note {
+	display: inline-block;
+	margin-bottom: 0.5em;
+	padding: 0.5em;
+	background-color: $card-color;
+	@include shadow(2);
+	.task {
 		display: inline-block;
-		margin-bottom: 0.5em;
-		padding: 0.5em;
-		background-color: $card-color;
-		@include shadow(2);
-		.task {
-			display: inline-block;
-		}
-		.card {
-		  width: 95px;
-		  height: 95px;
-			padding: 20px;
-		  margin: 0 auto;
-		  @include transition(all 250ms);
-		  @include shadow(1);
-		  &:hover {
-		    @include shadow(3);
-		    @include transform(translateY(-5px));
-		  }
-		}
+	}
+	.card {
+		word-wrap: break-word;
+		width: 95px;
+	  height: 95px;
+		padding: 20px;
+	  margin: 0 auto;
+	  @include transition(all 250ms);
+	  @include shadow(1);
+	  &:hover {
+	    @include shadow(3);
+	    @include transform(translateY(-5px));
+	  }
+	}
 }
 
 .notes {
