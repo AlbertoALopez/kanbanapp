@@ -69,25 +69,25 @@ class LaneStore {
 			lane.notes.includes(sourceId))[0];
 		const targetLane = lanes.filter(lane =>
 			lane.notes.includes(targetId))[0];
-			const sourceNoteIndex = sourceLane.notes.indexOf(sourceId);
-			const targetNoteIndex = targetLane.notes.indexOf(targetId);
+		const sourceNoteIndex = sourceLane.notes.indexOf(sourceId);
+		const targetNoteIndex = targetLane.notes.indexOf(targetId);
 
-			if (sourceLane === targetLane) {
-				sourceLane.notes = update(sourceLane.notes, {
-					$splice: [
-						[sourceNoteIndex, 1],
-						[targetNoteIndex, 0, sourceId]
-					]
-				});
-			}
-			else {
-				// get rid of source
-				sourceLane.notes,splice(sourceNoteIndex, 1);
-				// move it to target
-				targetLane.notes.splice(targetNoteIndex, 0, sourceId);
-			}
+		if (sourceLane === targetLane) {
+			sourceLane.notes = update(sourceLane.notes, {
+				$splice: [
+					[sourceNoteIndex, 1],
+					[targetNoteIndex, 0, sourceId]
+				]
+			});
+		}
+		else {
+			// get rid of source
+			sourceLane.notes.splice(sourceNoteIndex, 1);
+			// move it to target
+			targetLane.notes.splice(targetNoteIndex, 0, sourceId);
+		}
 
-			this.setState({ lanes });
+		this.setState({ lanes });
 	}
 }
 
